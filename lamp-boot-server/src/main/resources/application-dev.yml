@@ -19,7 +19,7 @@ lamp:
     ip: 81.70.207.162
     port: 3306
     driverClassName: com.mysql.cj.jdbc.Driver
-    database: lamp_base_0000
+    database: lamp_defaults
     username: root
     password: root
     url: jdbc:mysql://${lamp.mysql.ip}:${lamp.mysql.port}/${lamp.mysql.database}?characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
