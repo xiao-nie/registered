@@ -33,8 +33,8 @@
         <lamp-util.version>3.5.4</lamp-util.version>
         <lamp-project.version>3.5.4</lamp-project.version>
         <!-- jdk8 将这里改成 8 -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
