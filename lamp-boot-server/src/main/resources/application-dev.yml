@@ -21,5 +21,5 @@ lamp:
     driverClassName: com.mysql.cj.jdbc.Driver
     database: lamp_defaults
     username: root
-    password: root
+    password: fYTTIHITbf1EaZdCeQaPYEJTVf4363AT
     url: jdbc:mysql://${lamp.mysql.ip}:${lamp.mysql.port}/${lamp.mysql.database}?characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
