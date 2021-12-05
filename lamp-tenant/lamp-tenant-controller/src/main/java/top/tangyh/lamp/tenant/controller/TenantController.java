@@ -24,6 +24,7 @@ import top.tangyh.lamp.tenant.dto.TenantSaveDTO;
 import top.tangyh.lamp.tenant.dto.TenantUpdateDTO;
 import top.tangyh.lamp.tenant.entity.Tenant;
 import top.tangyh.lamp.tenant.enumeration.TenantStatusEnum;
+import top.tangyh.lamp.tenant.no.DeleteIds;
 import top.tangyh.lamp.tenant.service.TenantService;
 
 import javax.validation.constraints.NotNull;
@@ -100,8 +101,8 @@ public class TenantController extends SuperCacheController<TenantService, Long, 
     @ApiOperation(value = "删除租户和基础租户数据，请谨慎操作")
     @DeleteMapping("/deleteAll")
     @PreAuth("hasAnyRole('PT_ADMIN')")
-    public R<Boolean> deleteAll(@RequestBody List<Long> ids) {
-        return success(baseService.deleteAll(ids));
+    public R<Boolean> deleteAll(@RequestBody DeleteIds ids) {
+        return success(baseService.deleteAll(ids.getIds()));
     }
 
     @ApiOperation(value = "修改租户状态", notes = "修改租户状态")

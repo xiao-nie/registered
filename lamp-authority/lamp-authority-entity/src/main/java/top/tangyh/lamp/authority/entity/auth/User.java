@@ -162,15 +162,15 @@ public class User extends Entity<Long> implements EchoVO {
     private String nation;
 
     /**
-     * 学历
+     * 职称
      *
      * @Echo(api = DICTIONARY_ITEM_CLASS,  dictType = DictionaryType.EDUCATION)
      */
-    @ApiModelProperty(value = "学历")
-    @Size(max = 2, message = "学历长度不能超过2")
+    @ApiModelProperty(value = "职称")
+    @Size(max = 2, message = "职称长度不能超过20")
     @TableField(value = "education", condition = LIKE)
     @Echo(api = DICTIONARY_ITEM_CLASS, dictType = DictionaryType.EDUCATION)
-    @Excel(name = "学历")
+    @Excel(name = "职称")
     private String education;
 
     /**

@@ -16,7 +16,7 @@ public final class DictionaryType {
      */
     public static final String NATION = "NATION";
     /**
-     * 学历
+     * 职称
      */
     public static final String EDUCATION = "EDUCATION";
     /**
