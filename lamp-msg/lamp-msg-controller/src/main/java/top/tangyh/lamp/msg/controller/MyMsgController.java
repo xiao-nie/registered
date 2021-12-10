@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.tangyh.basic.annotation.log.SysLog;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.request.PageParams;
@@ -21,7 +18,9 @@ import top.tangyh.lamp.msg.entity.Msg;
 import top.tangyh.lamp.msg.enumeration.MsgType;
 import top.tangyh.lamp.msg.service.MsgService;
 import top.tangyh.lamp.msg.vo.MyMsgResult;
+import top.tangyh.lamp.sms.service.SmsService;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -94,5 +93,15 @@ public class MyMsgController {
     @PostMapping(value = "/mark")
     public R<Boolean> mark(@RequestBody List<Long> msgIds) {
         return R.success(msgService.mark(msgIds, ContextUtil.getUserId()));
+    }
+
+    @Resource
+    private SmsService smsService;
+
+    @ApiOperation(value = "smsTest", notes = "smsTest")
+    @GetMapping(value = "/test")
+    public void test() {
+        String[] str = {"213223", "2"};
+        smsService.send("+8617605674681", str);
     }
 }

@@ -23,3 +23,11 @@ lamp:
     username: root
     password: fYTTIHITbf1EaZdCeQaPYEJTVf4363AT
     url: jdbc:mysql://${lamp.mysql.ip}:${lamp.mysql.port}/${lamp.mysql.database}?characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
+
+tencentcloud:
+  sms:
+    secretId: AKIDkGVX7Tk8i25uSiH4f7KGxe5GAoCmrTO6
+    secretKey: cx2PaZY5MXgdGd06wVmmfHOm37xYu0vb
+    appId: 1400496989
+    sign: JavaE开发
+    templateId: 1232978

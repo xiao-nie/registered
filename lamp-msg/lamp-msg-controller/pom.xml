@@ -30,5 +30,9 @@
             <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-security-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-sms-biz</artifactId>
+        </dependency>
     </dependencies>
 </project>

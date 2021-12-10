@@ -6,7 +6,10 @@ import top.tangyh.basic.exception.BizException;
 import top.tangyh.basic.jwt.TokenUtil;
 import top.tangyh.basic.jwt.model.AuthInfo;
 import top.tangyh.lamp.authority.dto.auth.LoginParamDTO;
+import top.tangyh.lamp.authority.dto.auth.RegisterParamDTO;
+import top.tangyh.lamp.authority.entity.auth.User;
 import top.tangyh.lamp.authority.service.auth.OnlineService;
+import top.tangyh.lamp.authority.service.auth.UserService;
 import top.tangyh.lamp.oauth.granter.TokenGranterBuilder;
 import top.tangyh.lamp.oauth.service.ValidateCodeService;
 import io.swagger.annotations.Api;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -42,6 +46,9 @@ public class OauthController {
     private final TokenUtil tokenUtil;
     private final OnlineService onlineService;
 
+    @Resource
+    private UserService userService;
+
     /**
      * 租户登录 lamp-ui 系统
      */
@@ -49,6 +56,23 @@ public class OauthController {
     @PostMapping(value = "/noToken/login")
     public R<AuthInfo> login(@Validated @RequestBody LoginParamDTO login) throws BizException {
         return tokenGranterBuilder.getGranter(login.getGrantType()).grant(login);
+    }
+
+    /**
+     * 注册
+     */
+    @ApiOperation(value = "注册接口", notes = "注册账号时调用")
+    @PostMapping(value = "/noToken/register")
+    public R<AuthInfo> register(@Validated @RequestBody RegisterParamDTO register) throws BizException {
+        System.out.println("register = " + register);
+        R<Boolean> check = this.validateCodeService.check(register.getKey(), register.getCode());
+        if (check.getData() == null || !check.getData()) {
+            return R.fail("验证码错误，请刷新验证码重试");
+        }
+        User user = new User();
+        user.setAccount(register.getAccount());
+        userService.saveUser(user);
+        return R.success(null);
     }
 
     @ApiOperation(value = "退出", notes = "退出")
