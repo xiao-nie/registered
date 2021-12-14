@@ -28,7 +28,9 @@ import top.tangyh.lamp.tenant.no.DeleteIds;
 import top.tangyh.lamp.tenant.service.TenantService;
 
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static top.tangyh.lamp.tenant.enumeration.TenantStatusEnum.NORMAL;
 
@@ -70,6 +72,17 @@ public class TenantController extends SuperCacheController<TenantService, Long, 
     @GetMapping("/all")
     public R<List<Tenant>> list() {
         return success(baseService.list(Wraps.<Tenant>lbQ().eq(Tenant::getStatus, NORMAL)));
+    }
+
+    @ApiOperation(value = "查询所有企业名单", notes = "查询所有企业名单")
+    @GetMapping("/noToken/tenantList")
+    public R getTenantList() {
+        List<Tenant> list = baseService.list(Wraps.<Tenant>lbQ().eq(Tenant::getStatus, NORMAL));
+        Map map = new HashMap();
+        for (Tenant tenant : list) {
+            map.put(tenant.getCode(), tenant.getName());
+        }
+        return success(map);
     }
 
     @Override

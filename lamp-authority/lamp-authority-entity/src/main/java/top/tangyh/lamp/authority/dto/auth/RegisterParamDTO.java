@@ -29,8 +29,15 @@ public class RegisterParamDTO {
     @ApiModelProperty(value = "验证码")
     private String code;
 
+    @ApiModelProperty(value = "租户")
+    private String tenant;
+
+    @ApiModelProperty(value = "姓名")
+    private String theName;
+
     @ApiModelProperty(value = "账号")
     private String account;
+
     @ApiModelProperty(value = "密码")
     private String password;
 

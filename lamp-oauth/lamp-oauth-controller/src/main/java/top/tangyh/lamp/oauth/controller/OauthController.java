@@ -1,7 +1,10 @@
 package top.tangyh.lamp.oauth.controller;
 
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.SecureUtil;
 import top.tangyh.basic.annotation.base.IgnoreResponseBodyAdvice;
 import top.tangyh.basic.base.R;
+import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.exception.BizException;
 import top.tangyh.basic.jwt.TokenUtil;
 import top.tangyh.basic.jwt.model.AuthInfo;
@@ -10,6 +13,7 @@ import top.tangyh.lamp.authority.dto.auth.RegisterParamDTO;
 import top.tangyh.lamp.authority.entity.auth.User;
 import top.tangyh.lamp.authority.service.auth.OnlineService;
 import top.tangyh.lamp.authority.service.auth.UserService;
+import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.oauth.granter.TokenGranterBuilder;
 import top.tangyh.lamp.oauth.service.ValidateCodeService;
 import io.swagger.annotations.Api;
@@ -70,8 +74,13 @@ public class OauthController {
             return R.fail("验证码错误，请刷新验证码重试");
         }
         User user = new User();
+        user.setState(true);
         user.setAccount(register.getAccount());
-        userService.saveUser(user);
+        user.setName(register.getTheName());
+        user.setSalt(RandomUtil.randomString(20));
+        user.setPassword(SecureUtil.sha256(register.getPassword() + user.getSalt()));
+        ContextUtil.setTenant(register.getTenant());
+        userService.save(user);
         return R.success(null);
     }
 
