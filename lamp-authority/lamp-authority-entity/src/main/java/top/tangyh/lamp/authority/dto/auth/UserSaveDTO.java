@@ -1,5 +1,6 @@
 package top.tangyh.lamp.authority.dto.auth;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import top.tangyh.lamp.authority.enumeration.auth.Sex;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -131,5 +132,11 @@ public class UserSaveDTO implements Serializable {
     @ApiModelProperty(value = "密码")
     @Size(min = 6, max = 64, message = "密码长度不能小于6或超过64")
     private String password;
+
+    /**
+     * 号源
+     */
+    @ApiModelProperty(value = "号源")
+    private Integer sourceCount;
 
 }

@@ -131,4 +131,10 @@ public class UserUpdateDTO implements Serializable {
     @ApiModelProperty(value = "工作描述")
     @Size(max = 255, message = "工作描述长度不能超过255")
     private String workDescribe;
+
+    /**
+     * 号源
+     */
+    @ApiModelProperty(value = "号源")
+    private Integer sourceCount;
 }

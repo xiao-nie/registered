@@ -240,13 +240,20 @@ public class User extends Entity<Long> implements EchoVO {
     @TableField("last_login_time")
     private LocalDateTime lastLoginTime;
 
+    /**
+     * 号源
+     */
+    @ApiModelProperty(value = "号源")
+    @TableField("source_count")
+    private Integer sourceCount;
+
 
     @Builder
     public User(Long id, Long createdBy, LocalDateTime createTime, Long updatedBy, LocalDateTime updateTime,
                 String account, String name, Long orgId, Long stationId, Boolean readonly,
                 String email, String mobile, Sex sex, Boolean state, String avatar, String nation,
                 String education, String positionStatus, String workDescribe, LocalDateTime passwordErrorLastTime, Integer passwordErrorNum, LocalDateTime passwordExpireTime,
-                String password, String salt, LocalDateTime lastLoginTime) {
+                String password, String salt, LocalDateTime lastLoginTime, Integer sourceCount) {
         this.id = id;
         this.createdBy = createdBy;
         this.createTime = createTime;
@@ -272,6 +279,7 @@ public class User extends Entity<Long> implements EchoVO {
         this.password = password;
         this.salt = salt;
         this.lastLoginTime = lastLoginTime;
+        this.sourceCount = sourceCount;
     }
 
 }
