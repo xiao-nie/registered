@@ -45,6 +45,11 @@
             <artifactId>lamp-tenant-controller</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-reg-controller</artifactId>
+            <version>${lamp-project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>top.tangyh.basic</groupId>

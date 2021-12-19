@@ -152,6 +152,9 @@ lamp:
       file:
         title: 文件服务
         base-package: top.tangyh.lamp.file.controller
+      reg:
+        title: 挂号服务
+        base-package: top.tangyh.lamp.reg.controller
 
 knife4j:
   enable: true
