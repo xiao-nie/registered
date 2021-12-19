@@ -21,7 +21,6 @@
         <module>lamp-msg-controller</module>
         <module>lamp-msg-biz</module>
         <module>lamp-msg-entity</module>
-        <module>lamp-msg-nie</module>
     </modules>
     <dependencyManagement>
         <dependencies>
