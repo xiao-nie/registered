@@ -16,12 +16,15 @@ lamp:
     username: admin
     password: admin
   mysql:
-    ip: 81.70.207.162
+    #    ip: 81.70.207.162 #81docker
+    ip: rm-uf68h64hwg6p58k7dlo.mysql.rds.aliyuncs.com #阿里云
     port: 3306
     driverClassName: com.mysql.cj.jdbc.Driver
     database: lamp_defaults
-    username: root
-    password: fYTTIHITbf1EaZdCeQaPYEJTVf4363AT
+    #    username: root #81docker
+    username: xiaonie #阿里云
+    #    password: fYTTIHITbf1EaZdCeQaPYEJTVf4363AT #81docker
+    password: Nfh50200 #阿里云
     url: jdbc:mysql://${lamp.mysql.ip}:${lamp.mysql.port}/${lamp.mysql.database}?characterEncoding=utf8&useUnicode=true&useSSL=false&autoReconnect=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&nullCatalogMeansCurrent=true
 
 tencentcloud:
