@@ -26,6 +26,10 @@
             <groupId>top.tangyh.basic</groupId>
             <artifactId>lamp-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
