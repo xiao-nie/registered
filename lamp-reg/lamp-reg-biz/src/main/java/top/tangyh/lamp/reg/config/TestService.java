@@ -3,10 +3,7 @@ package top.tangyh.lamp.reg.config;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,11 +14,9 @@ import top.tangyh.lamp.authority.service.auth.UserService;
 import top.tangyh.lamp.reg.constant.Constant;
 import top.tangyh.lamp.reg.entity.SourceCount;
 import top.tangyh.lamp.reg.service.SourceCountService;
-import top.tangyh.lamp.reg.service.impl.SourceCountServiceImpl;
 import top.tangyh.lamp.tenant.entity.Tenant;
 import top.tangyh.lamp.tenant.service.TenantService;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
