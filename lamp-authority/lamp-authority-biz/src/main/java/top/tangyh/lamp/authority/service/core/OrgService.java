@@ -43,4 +43,11 @@ public interface OrgService extends SuperCacheService<Org>, LoadService {
      * @create [2021/5/23 9:37 下午 ] [tangyh] [初始创建]
      */
     boolean check(Long id, String name);
+
+    /**
+     * 查询所有科室
+     *
+     * @return
+     */
+    List<Org> findForeign();
 }

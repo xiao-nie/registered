@@ -7,6 +7,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -333,6 +334,11 @@ public class UserServiceImpl extends SuperCacheServiceImpl<UserMapper, User> imp
     @Transactional(readOnly = true)
     public Long todayUserCount() {
         return count(Wraps.<User>lbQ().leFooter(User::getCreateTime, LocalDateTime.now()).geHeader(User::getCreateTime, LocalDateTime.now()));
+    }
+
+    @Override
+    public List<User> getUserByOrg(Long orgId) {
+        return baseMapper.selectList(new LambdaQueryWrapper<User>().eq(User::getOrgId, orgId));
     }
 
     @Override

@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,11 @@ public class OrgServiceImpl extends SuperCacheServiceImpl<OrgMapper, Org> implem
         LbqWrapper<Org> wrap = Wraps.<Org>lbQ()
                 .eq(Org::getLabel, name).ne(Org::getId, id);
         return count(wrap) > 0;
+    }
+
+    @Override
+    public List<Org> findForeign() {
+        return baseMapper.selectList(new LambdaQueryWrapper<Org>().eq(Org::getParentId, 1472434504344797184L));
     }
 
     @Override

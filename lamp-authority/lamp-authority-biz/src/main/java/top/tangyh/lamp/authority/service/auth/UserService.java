@@ -194,4 +194,6 @@ public interface UserService extends SuperCacheService<User>, LoadService {
      * @return
      */
     Long todayUserCount();
+
+    List<User> getUserByOrg(Long orgId);
 }

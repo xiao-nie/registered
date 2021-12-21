@@ -11,4 +11,7 @@ import top.tangyh.lamp.reg.entity.SourceCount;
  **/
 @Repository
 public interface SourceCountMapper extends SuperMapper<SourceCount> {
+
+
+
 }

@@ -43,7 +43,7 @@ public class TestService {
     @Autowired
     private SourceCountService sourceCountService;
 
-    @Scheduled(cron = "0/30 * * * * ? ")
+    @Scheduled(cron = "0/30 * * * 1 ? ")
     private void configureTasks() {
 
         log.info("每天凌晨执行静态定时任务时间: {}", LocalDateTime.now());
