@@ -1,5 +1,7 @@
 package top.tangyh.lamp.reg.config;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,19 +55,18 @@ public class TestService {
                 //设置租户访问数据库
                 ContextUtil.setTenant(tenant.getCode());
                 //获取改租户下面所有医生
-                List<User> list = userService.list();
+                BaseMapper<User> baseMapper = userService.getBaseMapper();
+                List<User> list = baseMapper.selectList(new LambdaQueryWrapper<User>().eq(User::getStationId, Constant.DOCTOR_STATION_ID));
                 //清空号源表
                 sourceCountService.remove(new QueryWrap<>());
                 for (User user : list) {
-                    if (Constant.DOCTOR_STATION_ID.equals(user.getStationId())) {
-                        log.info("--------------{}: {}", user.getName(), user.getSourceCount());
-                        SourceCount sourceCount = SourceCount.builder()
-                                .doctorId(user.getId())
-                                .sourceCount(user.getSourceCount())
-                                .build();
-                        log.info("sourceCount: {}", sourceCount);
-                        sourceCountService.save(sourceCount);
-                    }
+                    log.info("--------------{}: {}", user.getName(), user.getSourceCount());
+                    SourceCount sourceCount = SourceCount.builder()
+                            .doctorId(user.getId())
+                            .sourceCount(user.getSourceCount())
+                            .build();
+                    log.info("sourceCount: {}", sourceCount);
+                    sourceCountService.save(sourceCount);
                 }
             }
         }
