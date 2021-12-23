@@ -75,7 +75,7 @@ lamp:
     len: 2
     charType: 2
   file:
-    storageType: LOCAL #  FAST_DFS LOCAL MIN_IO ALI_OSS HUAWEI_OSS QINIU_OSS
+    storageType: MIN_IO #  FAST_DFS LOCAL MIN_IO ALI_OSS HUAWEI_OSS QINIU_OSS
     delFile: false
     local:
       storage-path: /Users/tangyh/data/projects/uploadfile/file/     # 文件存储路径  （ 某些版本的 window 需要改成  D:\\data\\projects\\uploadfile\\file\\  ）
@@ -89,10 +89,10 @@ lamp:
       access-key-id: "填写你的id"
       access-key-secret: "填写你的秘钥"
     minIo:
-      endpoint: "http://127.0.0.1:9000/"
-      accessKey: "lamp"
-      secretKey: "lamp"
-      bucket: "dev"
+      endpoint: "http://81.70.207.162:9090/"
+      accessKey: "502006690"
+      secretKey: "502006690"
+      bucket: "test"
     huawei:
       uriPrefix: "dev.obs.cn-southwest-2.myhuaweicloud.com"
       endpoint: "obs.cn-southwest-2.myhuaweicloud.com"
