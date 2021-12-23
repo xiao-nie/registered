@@ -19,10 +19,7 @@ import top.tangyh.lamp.reg.service.SourceCountService;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author nie
@@ -113,6 +110,8 @@ public class SourceCountServiceImpl extends SuperCacheServiceImpl<SourceCountMap
                 .doctor_id(user.getId())
                 .name(user.getName() + "(" + theTitle + ")")
                 .theTitle(theTitle)
+                .avatar(user.getAvatar())
+                .sex(user.getSex())
                 .context(user.getWorkDescribe())
                 .sonOrgName(org.getLabel())
                 .sourceCount(baseMapper.selectOne(new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getDoctorId, user.getId())).getSourceCount())

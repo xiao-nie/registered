@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,8 @@ import top.tangyh.lamp.authority.service.core.OrgService;
 import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.common.vo.result.AppendixResultVO;
 import top.tangyh.lamp.file.service.AppendixService;
+import top.tangyh.lamp.reg.entity.SourceCount;
+import top.tangyh.lamp.reg.service.SourceCountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,6 +98,7 @@ public class UserController extends SuperCacheController<UserService, Long, User
     private final AppendixService appendixService;
     private final ExcelUserVerifyHandlerImpl excelUserVerifyHandler;
     private final UserExcelDictHandlerImpl userExcelDictHandlerIImpl;
+    private final SourceCountService sourceCountService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "ID", dataType = DATA_TYPE_LONG, paramType = PARAM_TYPE_QUERY),
@@ -116,7 +120,18 @@ public class UserController extends SuperCacheController<UserService, Long, User
     public R<User> handlerSave(UserSaveDTO data) {
         User user = BeanUtil.toBean(data, User.class);
         user.setReadonly(false);
+        if (StringUtils.hasText(user.getAvatar())){
+            user.setAvatar("http://81.70.207.162:9090/test/2222/USER_AVATAR/2021/12/23/a85eb70d79b34ac78edb97c7bbc31884.png");
+        }
         baseService.saveUser(user);
+        System.out.println("user = " + user);
+        SourceCount sourceCount = sourceCountService.getById(user.getId());
+        if (sourceCount == null) {
+            sourceCountService.save(SourceCount.builder()
+                    .doctorId(user.getId())
+                    .sourceCount(user.getSourceCount())
+                    .build());
+        }
         return success(user);
     }
 

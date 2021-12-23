@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.tangyh.lamp.authority.enumeration.auth.Sex;
 
 /**
  * <p>
@@ -24,6 +25,8 @@ public class RegDoctorDTO {
     private Long doctor_id;
     @JsonProperty("label")
     private String name;
+    private Sex sex;
+    private String avatar;
     private Integer sourceCount;
     private String theTitle;
     private String context;

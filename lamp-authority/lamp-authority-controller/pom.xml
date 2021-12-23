@@ -19,6 +19,12 @@
             <artifactId>lamp-authority-biz</artifactId>
             <version>${lamp-project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>top.tangyh.lamp</groupId>
+            <artifactId>lamp-reg-biz</artifactId>
+            <version>3.5.4</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
