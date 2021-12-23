@@ -111,7 +111,7 @@ public class SourceCountServiceImpl extends SuperCacheServiceImpl<SourceCountMap
         }
         return builder
                 .doctor_id(user.getId())
-                .name(user.getName())
+                .name(user.getName() + "(" + theTitle + ")")
                 .theTitle(theTitle)
                 .context(user.getWorkDescribe())
                 .sonOrgName(org.getLabel())
