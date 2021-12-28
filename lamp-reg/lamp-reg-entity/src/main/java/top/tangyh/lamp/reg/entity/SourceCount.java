@@ -28,7 +28,7 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("c_source_count")
-@ApiModel(value = "User", description = "用户")
+@ApiModel(value = "SourceCount", description = "号源")
 @AllArgsConstructor
 @Builder
 public class SourceCount extends Entity<Long> {
