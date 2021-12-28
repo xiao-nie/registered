@@ -63,4 +63,7 @@ public enum Sex implements BaseEnum {
         return this.name();
     }
 
+    public String getDesc() {
+        return desc;
+    }
 }

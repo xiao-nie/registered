@@ -109,12 +109,19 @@ public class SourceCountServiceImpl extends SuperCacheServiceImpl<SourceCountMap
                 theTitle = "其他";
                 break;
         }
+
+//        switch (user.getSex()){
+//            case
+//        }
+
         return builder
                 .doctor_id(user.getId())
                 .name(user.getName() + "(" + theTitle + ")")
                 .theTitle(theTitle)
                 .context(user.getWorkDescribe())
                 .sonOrgName(org.getLabel())
+                .avatar(user.getAvatar())
+                .sex(user.getSex().getDesc())
                 .sourceCount(baseMapper.selectOne(new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getDoctorId, user.getId())).getSourceCount())
                 .build();
     }

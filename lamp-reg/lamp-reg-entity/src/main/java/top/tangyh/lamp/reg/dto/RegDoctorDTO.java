@@ -28,5 +28,7 @@ public class RegDoctorDTO {
     private String theTitle;
     private String context;
     private String sonOrgName;
+    private String avatar;
+    private String sex;
 
 }
