@@ -2,6 +2,7 @@ package top.tangyh.lamp.reg.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import top.tangyh.basic.base.service.SuperCacheServiceImpl;
 import top.tangyh.basic.cache.model.CacheKeyBuilder;
 import top.tangyh.lamp.reg.entity.Registration;
@@ -20,6 +21,7 @@ import java.util.Set;
  * @author nie
  * @date: 2021-12-28
  **/
+@Service
 public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationMapper, Registration> implements RegistrationService {
 
     @Override

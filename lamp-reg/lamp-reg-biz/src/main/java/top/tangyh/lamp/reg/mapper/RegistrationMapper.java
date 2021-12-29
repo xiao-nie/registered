@@ -1,6 +1,7 @@
 package top.tangyh.lamp.reg.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import top.tangyh.basic.base.mapper.SuperMapper;
 import top.tangyh.lamp.reg.entity.Registration;
 
@@ -12,6 +13,6 @@ import top.tangyh.lamp.reg.entity.Registration;
  * @author nie
  * @date: 2021-12-28
  **/
-@Mapper
+@Repository
 public interface RegistrationMapper extends SuperMapper<Registration> {
 }
