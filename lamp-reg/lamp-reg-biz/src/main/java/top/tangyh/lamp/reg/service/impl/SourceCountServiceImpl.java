@@ -107,10 +107,6 @@ public class SourceCountServiceImpl extends SuperCacheServiceImpl<SourceCountMap
                 break;
         }
 
-//        switch (user.getSex()){
-//            case
-//        }
-
         return builder
                 .doctor_id(user.getId())
                 .name(user.getName() + "(" + theTitle + ")")
