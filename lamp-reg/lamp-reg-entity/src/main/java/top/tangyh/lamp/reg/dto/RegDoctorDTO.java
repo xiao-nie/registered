@@ -25,13 +25,11 @@ public class RegDoctorDTO {
     private Long doctor_id;
     @JsonProperty("label")
     private String name;
-    private Sex sex;
+    private String sex;
     private String avatar;
     private Integer sourceCount;
     private String theTitle;
     private String context;
     private String sonOrgName;
-    private String avatar;
-    private String sex;
 
 }
