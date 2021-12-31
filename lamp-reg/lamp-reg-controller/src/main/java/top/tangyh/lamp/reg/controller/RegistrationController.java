@@ -32,10 +32,10 @@ public class RegistrationController extends SuperCacheController<RegistrationSer
     private RegistrationService registrationService;
 
     @PostMapping("/registered/{doctor_id}")
-    public R registered(@PathVariable("doctor_id") String doctorId) {
+    public R registered(@PathVariable("doctor_id") Long doctorId) {
         log.info("doctor: {}", doctorId);
-        log.info("userId: {}",ContextUtil.getUserId());
-        return success();
+        log.info("userId: {}", ContextUtil.getUserId());
+        return registrationService.saveReg(doctorId, ContextUtil.getUserId());
     }
 
 }

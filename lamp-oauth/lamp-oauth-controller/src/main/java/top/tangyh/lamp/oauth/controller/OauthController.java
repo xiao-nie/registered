@@ -8,10 +8,15 @@ import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.basic.exception.BizException;
 import top.tangyh.basic.jwt.TokenUtil;
 import top.tangyh.basic.jwt.model.AuthInfo;
+import top.tangyh.lamp.authority.dao.auth.UserRoleMapper;
 import top.tangyh.lamp.authority.dto.auth.LoginParamDTO;
 import top.tangyh.lamp.authority.dto.auth.RegisterParamDTO;
+import top.tangyh.lamp.authority.dto.auth.UserRoleSaveDTO;
+import top.tangyh.lamp.authority.entity.auth.RoleAuthority;
 import top.tangyh.lamp.authority.entity.auth.User;
+import top.tangyh.lamp.authority.entity.auth.UserRole;
 import top.tangyh.lamp.authority.service.auth.OnlineService;
+import top.tangyh.lamp.authority.service.auth.RoleAuthorityService;
 import top.tangyh.lamp.authority.service.auth.UserService;
 import top.tangyh.lamp.common.constant.BizConstant;
 import top.tangyh.lamp.oauth.granter.TokenGranterBuilder;
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * 认证Controller
@@ -45,6 +51,7 @@ import java.io.IOException;
 @Api(value = "用户授权认证", tags = "登录接口")
 public class OauthController {
 
+    private final UserRoleMapper userRoleMapper;
     private final ValidateCodeService validateCodeService;
     private final TokenGranterBuilder tokenGranterBuilder;
     private final TokenUtil tokenUtil;
@@ -81,6 +88,10 @@ public class OauthController {
         user.setPassword(SecureUtil.sha256(register.getPassword() + user.getSalt()));
         ContextUtil.setTenant(register.getTenant());
         userService.save(user);
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getId());
+        userRole.setRoleId(1471768491190124544L);
+        userRoleMapper.insert(userRole);
         return R.success(null);
     }
 

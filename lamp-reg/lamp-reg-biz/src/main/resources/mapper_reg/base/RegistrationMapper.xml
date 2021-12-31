@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.tangyh.lamp.reg.mapper.RegistrationMapper">
 
+
+    <select id="checkReg" resultType="java.lang.Integer">
+        select count(*)
+        from c_registration
+        where create_time between #{begin} and #{after}
+          and doctor_id = #{doctorId}
+          and user_id = #{userId}
+    </select>
+    <select id="getToday" resultType="top.tangyh.lamp.reg.entity.Registration">
+        select *
+        from c_registration
+        where create_time between #{begin} and #{after}
+          and doctor_id = #{doctorId}
+    </select>
 </mapper>

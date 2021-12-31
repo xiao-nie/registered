@@ -11,6 +11,7 @@ import top.tangyh.basic.base.entity.Entity;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * <p>
@@ -28,6 +29,7 @@ import javax.validation.constraints.Size;
 @TableName("c_registration")
 @ApiModel(value = "Registration", description = "挂号信息")
 @AllArgsConstructor
+@Builder
 public class Registration extends Entity<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -59,7 +61,7 @@ public class Registration extends Entity<Long> {
     @NotEmpty(message = "就诊时间")
     @TableField(value = "clinical_time")
     @Excel(name = "就诊时间")
-    private Long clinicalTime;
+    private Date clinicalTime;
 
     /**
      * 就诊序号
@@ -92,7 +94,7 @@ public class Registration extends Entity<Long> {
     @Size(max = 255, message = "病历信息长度不能超过255")
     @TableField(value = "case_history")
     @Excel(name = "病历信息")
-    private Integer caseHistory;
+    private String caseHistory;
 
 
 }
