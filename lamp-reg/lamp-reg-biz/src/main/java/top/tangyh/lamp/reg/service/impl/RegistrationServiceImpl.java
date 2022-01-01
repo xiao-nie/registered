@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.service.SuperCacheServiceImpl;
 import top.tangyh.basic.cache.model.CacheKeyBuilder;
+import top.tangyh.lamp.authority.dao.auth.UserMapper;
+import top.tangyh.lamp.authority.dao.core.OrgMapper;
+import top.tangyh.lamp.reg.dto.RegCredentialsDTO;
 import top.tangyh.lamp.reg.entity.Registration;
 import top.tangyh.lamp.reg.entity.SourceCount;
 import top.tangyh.lamp.reg.mapper.RegistrationMapper;
@@ -33,6 +36,12 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
     @Autowired
     private SourceCountMapper sourceCountMapper;
 
+    @Autowired
+    private OrgMapper orgMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
     public Map<Serializable, Object> findByIds(Set<Serializable> ids) {
         return null;
@@ -49,7 +58,7 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
     }
 
     @Override
-    public R<Registration> saveReg(Long doctorId, Long userId) {
+    public R<RegCredentialsDTO> saveReg(Long doctorId, Long userId) {
         if (checkReg(doctorId, userId)) {
             return R.fail("您今天已经挂过该医生的号了，请勿重复挂号！");
         }
@@ -74,8 +83,25 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
                 .build();
         int insert = baseMapper.insert(registration);
         if (insert > 0) {
-            return R.success(baseMapper.selectById(registration.getId()));
+            RegCredentialsDTO regCredentialsDTO = entityToRegCredentialsDTO(baseMapper.selectById(registration.getId()));
+            return R.success(regCredentialsDTO);
         }
         return R.fail("挂号失败");
+    }
+
+    public RegCredentialsDTO entityToRegCredentialsDTO(Registration entity) {
+        if (entity == null) {
+            return RegCredentialsDTO.builder().build();
+        }
+        return RegCredentialsDTO.builder()
+                .id(entity.getId())
+                .createTime(entity.getCreateTime())
+                .userName(userMapper.selectById(entity.getUserId()).getName())
+                .doctorName(userMapper.selectById(entity.getDoctorId()).getName())
+                .number(entity.getNumber())
+                .treatmentDepartment(orgMapper.selectById(userMapper.selectById(entity.getDoctorId()).getOrgId()).getLabel())
+                .userId(entity.getUserId())
+                .build();
+
     }
 }
