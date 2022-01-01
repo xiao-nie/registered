@@ -15,6 +15,7 @@ import top.tangyh.lamp.authority.dto.auth.UserRoleSaveDTO;
 import top.tangyh.lamp.authority.entity.auth.RoleAuthority;
 import top.tangyh.lamp.authority.entity.auth.User;
 import top.tangyh.lamp.authority.entity.auth.UserRole;
+import top.tangyh.lamp.authority.enumeration.auth.Sex;
 import top.tangyh.lamp.authority.service.auth.OnlineService;
 import top.tangyh.lamp.authority.service.auth.RoleAuthorityService;
 import top.tangyh.lamp.authority.service.auth.UserService;
@@ -86,6 +87,9 @@ public class OauthController {
         user.setName(register.getTheName());
         user.setSalt(RandomUtil.randomString(20));
         user.setPassword(SecureUtil.sha256(register.getPassword() + user.getSalt()));
+        user.setSex(Sex.N);
+        user.setOrgId(1472437795271213056L);
+        user.setStationId(1472438967499489280L);
         ContextUtil.setTenant(register.getTenant());
         userService.save(user);
         UserRole userRole = new UserRole();
