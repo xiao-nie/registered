@@ -114,7 +114,8 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
         if (registration.getState() == 2) {
             return R.fail("已就诊无法取消");
         }
-        return baseMapper.deleteById(id) > 0 && sourceCountService.add(baseMapper.selectById(id).getDoctorId()) > 0 ? R.success("取消成功") : R.fail("取消失败");
+        Long doctorId = baseMapper.selectById(id).getDoctorId();
+        return baseMapper.deleteById(id) > 0 && sourceCountService.add(doctorId) > 0 ? R.success("取消成功") : R.fail("取消失败");
     }
 
     public RegCredentialsDTO entityToRegCredentialsDTO(Registration entity) {

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.service.SuperCacheServiceImpl;
 import top.tangyh.basic.cache.model.CacheKeyBuilder;
 import top.tangyh.lamp.authority.entity.auth.User;
@@ -83,6 +84,13 @@ public class SourceCountServiceImpl extends SuperCacheServiceImpl<SourceCountMap
         SourceCount one = baseMapper.selectOne(new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getDoctorId, doctorId));
         one.setSourceCount(one.getSourceCount() - 1);
         return baseMapper.update(one, new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getId, one.getId()));
+    }
+
+    @Override
+    public R<RegDoctorDTO> getDoctor(Long doctorId) {
+        User user = userService.getById(doctorId);
+        RegDoctorDTO regDoctorDTO = userConvertDoctor(user, orgService.getById(user.getOrgId()));
+        return R.success(regDoctorDTO);
     }
 
     private RegOrgDTO orgConvertDto(Org org, List<RegDoctorDTO> list) {
