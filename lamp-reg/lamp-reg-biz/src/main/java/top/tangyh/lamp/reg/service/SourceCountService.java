@@ -20,4 +20,20 @@ public interface SourceCountService extends SuperCacheService<SourceCount>, Load
      */
     List<RegOrgDTO> getOrgList();
 
+    /**
+     * 号源+1
+     *
+     * @param doctorId
+     * @return
+     */
+    Integer add(Long doctorId);
+
+    /**
+     * 号源-1
+     *
+     * @param doctorId
+     * @return
+     */
+    Integer decrease(Long doctorId);
+
 }

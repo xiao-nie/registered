@@ -3,20 +3,19 @@ package top.tangyh.lamp.reg.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.tangyh.basic.base.R;
 import top.tangyh.basic.base.controller.SuperCacheController;
 import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.lamp.authority.dto.core.OrgPageQuery;
 import top.tangyh.lamp.authority.dto.core.OrgSaveDTO;
 import top.tangyh.lamp.authority.dto.core.OrgUpdateDTO;
+import top.tangyh.lamp.reg.dto.RegCredentialsDTO;
 import top.tangyh.lamp.reg.entity.Registration;
 import top.tangyh.lamp.reg.service.RegistrationService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author nie
@@ -31,11 +30,39 @@ public class RegistrationController extends SuperCacheController<RegistrationSer
     @Autowired
     private RegistrationService registrationService;
 
+    /**
+     * 挂号
+     *
+     * @param doctorId
+     * @return
+     */
     @PostMapping("/registered/{doctor_id}")
     public R registered(@PathVariable("doctor_id") Long doctorId) {
         log.info("doctor: {}", doctorId);
         log.info("userId: {}", ContextUtil.getUserId());
         return registrationService.saveReg(doctorId, ContextUtil.getUserId());
     }
+
+    /**
+     * 挂号记录
+     *
+     * @return
+     */
+    @GetMapping("/registered/page")
+    public R<List<RegCredentialsDTO>> getRegList() {
+        return registrationService.getRegList();
+    }
+
+    /**
+     * 取消挂号
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/registered/del/{id}")
+    public R delReg(@PathVariable("id") Long id) {
+        return registrationService.delReg(id);
+    }
+
 
 }

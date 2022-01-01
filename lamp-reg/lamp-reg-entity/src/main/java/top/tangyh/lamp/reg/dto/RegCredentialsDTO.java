@@ -53,5 +53,15 @@ public class RegCredentialsDTO {
      */
     private Integer number;
 
+    /**
+     * 就诊状态
+     */
+    private String state;
+
+    /**
+     * 病历信息
+     */
+    private String caseHistory;
+
 
 }

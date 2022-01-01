@@ -6,6 +6,8 @@ import top.tangyh.basic.model.LoadService;
 import top.tangyh.lamp.reg.dto.RegCredentialsDTO;
 import top.tangyh.lamp.reg.entity.Registration;
 
+import java.util.List;
+
 /**
  * <p>
  *
@@ -33,5 +35,20 @@ public interface RegistrationService extends SuperCacheService<Registration>, Lo
      * @return
      */
     R<RegCredentialsDTO> saveReg(Long doctorId, Long userId);
+
+    /**
+     * 获取当前用户挂号列表
+     *
+     * @return
+     */
+    R<List<RegCredentialsDTO>> getRegList();
+
+    /**
+     * 取消挂号订单
+     *
+     * @param id
+     * @return
+     */
+    R delReg(Long id);
 
 }

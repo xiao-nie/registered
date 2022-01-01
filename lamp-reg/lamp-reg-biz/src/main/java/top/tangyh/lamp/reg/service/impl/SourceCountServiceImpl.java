@@ -71,6 +71,20 @@ public class SourceCountServiceImpl extends SuperCacheServiceImpl<SourceCountMap
         return list;
     }
 
+    @Override
+    public Integer add(Long doctorId) {
+        SourceCount one = baseMapper.selectOne(new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getDoctorId, doctorId));
+        one.setSourceCount(one.getSourceCount() + 1);
+        return baseMapper.update(one, new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getId, one.getId()));
+    }
+
+    @Override
+    public Integer decrease(Long doctorId) {
+        SourceCount one = baseMapper.selectOne(new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getDoctorId, doctorId));
+        one.setSourceCount(one.getSourceCount() - 1);
+        return baseMapper.update(one, new LambdaQueryWrapper<SourceCount>().eq(SourceCount::getId, one.getId()));
+    }
+
     private RegOrgDTO orgConvertDto(Org org, List<RegDoctorDTO> list) {
         RegOrgDTO.RegOrgDTOBuilder builder = RegOrgDTO.builder();
         if (org == null) {
