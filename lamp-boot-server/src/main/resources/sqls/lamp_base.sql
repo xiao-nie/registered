@@ -1,21 +1,22 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 127.0.0.1
+ Source Server         : 阿里云
  Source Server Type    : MySQL
- Source Server Version : 50722
- Source Host           : 127.0.0.1:3306
- Source Schema         : lamp_base_0000
+ Source Server Version : 80018
+ Source Host           : rm-uf68h64hwg6p58k7dlo.mysql.rds.aliyuncs.com:3306
+ Source Schema         : lamp_base_2222
 
  Target Server Type    : MySQL
- Target Server Version : 50722
+ Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 21/07/2021 22:21:53
+ Date: 01/01/2022 21:31:33
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
 -- ----------------------------
 -- Table structure for b_order
 -- ----------------------------
@@ -117,10 +118,6 @@ CREATE TABLE `c_application`  (
                                   UNIQUE INDEX `uk_client_id`(`client_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '应用' ROW_FORMAT = DYNAMIC;
 
--- ----------------------------
--- Records of c_application
--- ----------------------------
-INSERT INTO `c_application` VALUES (1, 'lamp_web', 'lamp_web_secret', 'https://tangyh.top', 'lamp快速开发平台', NULL, 'PC', '内置', b'1', 1, '2020-04-02 15:05:14', 1, '2020-04-02 15:05:17');
 
 -- ----------------------------
 -- Table structure for c_area
@@ -236,6 +233,7 @@ CREATE TABLE `c_dictionary`  (
                                  UNIQUE INDEX `uk_type_code`(`type`, `code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字典项' ROW_FORMAT = DYNAMIC;
 
+
 -- ----------------------------
 -- Table structure for c_file
 -- ----------------------------
@@ -261,9 +259,6 @@ CREATE TABLE `c_file`  (
                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '增量文件上传日志' ROW_FORMAT = DYNAMIC;
 
--- ----------------------------
--- Records of c_file
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for c_login_log
@@ -286,6 +281,10 @@ CREATE TABLE `c_login_log`  (
                                 `created_by` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
                                 PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '登录日志' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of c_login_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for c_menu
@@ -312,7 +311,6 @@ CREATE TABLE `c_menu`  (
                            UNIQUE INDEX `uk_path`(`path`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单' ROW_FORMAT = DYNAMIC;
 
-
 -- ----------------------------
 -- Table structure for c_opt_log
 -- ----------------------------
@@ -337,6 +335,10 @@ CREATE TABLE `c_opt_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of c_opt_log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for c_opt_log_ext
 -- ----------------------------
 DROP TABLE IF EXISTS `c_opt_log_ext`;
@@ -349,6 +351,10 @@ CREATE TABLE `c_opt_log_ext`  (
                                   `created_by` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统日志扩展' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of c_opt_log_ext
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for c_org
@@ -373,7 +379,6 @@ CREATE TABLE `c_org`  (
                           FULLTEXT INDEX `fu_path`(`tree_path`)
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '组织' ROW_FORMAT = DYNAMIC;
 
-
 -- ----------------------------
 -- Table structure for c_parameter
 -- ----------------------------
@@ -394,6 +399,26 @@ CREATE TABLE `c_parameter`  (
                                 UNIQUE INDEX `uk_key`(`key_`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '参数配置' ROW_FORMAT = DYNAMIC;
 
+
+-- ----------------------------
+-- Table structure for c_registration
+-- ----------------------------
+DROP TABLE IF EXISTS `c_registration`;
+CREATE TABLE `c_registration`  (
+                                   `id` bigint(20) NOT NULL,
+                                   `doctor_id` bigint(20) NOT NULL,
+                                   `user_id` bigint(20) NOT NULL,
+                                   `clinical_time` datetime NULL DEFAULT NULL,
+                                   `number` int(11) NULL DEFAULT NULL,
+                                   `state` int(11) NULL DEFAULT NULL,
+                                   `case_history` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                   `created_by` bigint(20) NULL DEFAULT NULL,
+                                   `create_time` datetime NULL DEFAULT NULL,
+                                   `updated_by` bigint(20) NULL DEFAULT NULL,
+                                   `update_time` datetime NULL DEFAULT NULL,
+                                   PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
 -- ----------------------------
 -- Table structure for c_resource
 -- ----------------------------
@@ -412,6 +437,7 @@ CREATE TABLE `c_resource`  (
                                PRIMARY KEY (`id`) USING BTREE,
                                UNIQUE INDEX `uk_code`(`code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '资源' ROW_FORMAT = DYNAMIC;
+
 
 -- ----------------------------
 -- Table structure for c_role
@@ -448,6 +474,7 @@ CREATE TABLE `c_role_authority`  (
                                      UNIQUE INDEX `uk_role_authority`(`authority_id`, `authority_type`, `role_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色的资源' ROW_FORMAT = DYNAMIC;
 
+
 -- ----------------------------
 -- Table structure for c_role_org
 -- ----------------------------
@@ -463,6 +490,10 @@ CREATE TABLE `c_role_org`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色组织关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of c_role_org
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for c_source_count
 -- ----------------------------
 DROP TABLE IF EXISTS `c_source_count`;
@@ -475,7 +506,7 @@ CREATE TABLE `c_source_count`  (
                                    `update_time` datetime NOT NULL COMMENT '最后修改时间',
                                    `updated_by` bigint(20) NOT NULL COMMENT '最后修改人',
                                    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for c_station
@@ -565,6 +596,10 @@ CREATE TABLE `e_block_list`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '阻止访问' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of e_block_list
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_msg
 -- ----------------------------
 DROP TABLE IF EXISTS `e_msg`;
@@ -587,6 +622,10 @@ CREATE TABLE `e_msg`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of e_msg
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_msg_receive
 -- ----------------------------
 DROP TABLE IF EXISTS `e_msg_receive`;
@@ -601,6 +640,10 @@ CREATE TABLE `e_msg_receive`  (
                                   `updated_by` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '消息接收表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of e_msg_receive
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_rate_limiter
@@ -622,6 +665,9 @@ CREATE TABLE `e_rate_limiter`  (
                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '限流' ROW_FORMAT = DYNAMIC;
 
+-- ----------------------------
+-- Records of e_rate_limiter
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_sms_send_status
@@ -717,6 +763,10 @@ CREATE TABLE `undo_log`  (
                              `log_modified` datetime(6) NOT NULL COMMENT 'modify datetime',
                              PRIMARY KEY (`id`) USING BTREE,
                              UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'AT transaction mode undo table' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'AT transaction mode undo table' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of undo_log
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
