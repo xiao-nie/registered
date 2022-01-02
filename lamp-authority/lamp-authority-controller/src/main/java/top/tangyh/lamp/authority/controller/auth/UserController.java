@@ -52,7 +52,9 @@ import top.tangyh.lamp.authority.dto.auth.UserUpdateBaseInfoDTO;
 import top.tangyh.lamp.authority.dto.auth.UserUpdateDTO;
 import top.tangyh.lamp.authority.dto.auth.UserUpdatePasswordDTO;
 import top.tangyh.lamp.authority.entity.auth.User;
+import top.tangyh.lamp.authority.entity.auth.UserRole;
 import top.tangyh.lamp.authority.entity.core.Org;
+import top.tangyh.lamp.authority.service.auth.UserRoleService;
 import top.tangyh.lamp.authority.service.auth.UserService;
 import top.tangyh.lamp.authority.service.core.OrgService;
 import top.tangyh.lamp.common.constant.BizConstant;
@@ -99,6 +101,7 @@ public class UserController extends SuperCacheController<UserService, Long, User
     private final ExcelUserVerifyHandlerImpl excelUserVerifyHandler;
     private final UserExcelDictHandlerImpl userExcelDictHandlerIImpl;
     private final SourceCountService sourceCountService;
+    private final UserRoleService userRoleService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "ID", dataType = DATA_TYPE_LONG, paramType = PARAM_TYPE_QUERY),
@@ -120,10 +123,16 @@ public class UserController extends SuperCacheController<UserService, Long, User
     public R<User> handlerSave(UserSaveDTO data) {
         User user = BeanUtil.toBean(data, User.class);
         user.setReadonly(false);
-        if (StringUtils.hasText(user.getAvatar())){
+        if (StringUtils.hasText(user.getAvatar())) {
             user.setAvatar("http://81.70.207.162:9090/test/2222/USER_AVATAR/2021/12/23/a85eb70d79b34ac78edb97c7bbc31884.png");
         }
         baseService.saveUser(user);
+        if (user.getStationId() == 1472436306943410176L) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(user.getId());
+            userRole.setRoleId(1477499578507853824L);
+            userRoleService.getBaseMapper().insert(userRole);
+        }
         System.out.println("user = " + user);
         SourceCount sourceCount = sourceCountService.getById(user.getId());
         if (sourceCount == null) {
