@@ -1,6 +1,8 @@
 package top.tangyh.lamp.reg.service.impl;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,11 @@ import top.tangyh.basic.cache.model.CacheKeyBuilder;
 import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.lamp.authority.dao.auth.UserMapper;
 import top.tangyh.lamp.authority.dao.core.OrgMapper;
+import top.tangyh.lamp.authority.entity.auth.User;
+import top.tangyh.lamp.reg.dto.HistoryDTO;
+import top.tangyh.lamp.reg.dto.MinDTO;
 import top.tangyh.lamp.reg.dto.RegCredentialsDTO;
+import top.tangyh.lamp.reg.dto.RegUserInfo;
 import top.tangyh.lamp.reg.entity.Registration;
 import top.tangyh.lamp.reg.entity.SourceCount;
 import top.tangyh.lamp.reg.mapper.RegistrationMapper;
@@ -21,6 +27,7 @@ import top.tangyh.lamp.reg.service.SourceCountService;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -118,6 +125,28 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
         return baseMapper.deleteById(id) > 0 && sourceCountService.add(doctorId) > 0 ? R.success("取消成功") : R.fail("取消失败");
     }
 
+    @Override
+    public R getMin() {
+        List<Registration> today = baseMapper.getToday(ContextUtil.getUserId(), DateUtil.beginOfDay(new Date()), DateUtil.endOfDay(new Date()));
+        if (today.size() < 1) {
+            return R.fail("您今天暂无患者就诊！");
+        }
+        //过滤出待就诊和就诊中的挂号记录
+        List<Registration> state = today.stream().filter(registration -> registration.getState() < 2).collect(Collectors.toList());
+        //获取需要叫号的患者信息，根据排号顺序
+        Registration min = state.stream().min(Comparator.comparing(Registration::getNumber)).get();
+        User user = userMapper.selectById(min.getUserId());
+        RegUserInfo regUserInfo = userTORegUserDTO(user, min);
+
+        List<Registration> registrations = baseMapper.selectList(new LambdaQueryWrapper<Registration>()
+                .eq(Registration::getUserId, min.getUserId())
+                .eq(Registration::getDoctorId, min.getDoctorId())
+                .ne(Registration::getId, min.getId()));
+        ArrayList<HistoryDTO> historyDTOS = new ArrayList<>();
+        registrations.forEach(r -> historyDTOS.add(HistoryDTO.builder().id(r.getId()).date(LocalDateTimeUtil.format(r.getCreateTime(), DatePattern.NORM_DATETIME_PATTERN)).build()));
+        return R.success(MinDTO.builder().registration(min).regUserInfo(regUserInfo).hisList(historyDTOS).build());
+    }
+
     public RegCredentialsDTO entityToRegCredentialsDTO(Registration entity) {
         if (entity == null) {
             return RegCredentialsDTO.builder().build();
@@ -144,6 +173,33 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
                 .userId(entity.getUserId())
                 .state(state)
                 .caseHistory(entity.getCaseHistory())
+                .build();
+
+    }
+
+    private RegUserInfo userTORegUserDTO(User user, Registration registration) {
+        if (user == null) {
+            return null;
+        }
+        String state = "";
+        switch (registration.getState()) {
+            case 0:
+                state = "待就诊";
+                break;
+            case 1:
+                state = "就诊中";
+                break;
+            case 2:
+                state = "已就诊";
+                break;
+        }
+        return RegUserInfo.builder()
+                .id(user.getId())
+                .idCard(user.getAccount())
+                .name(user.getName())
+                .sex(user.getSex().getDesc())
+                .age(DateUtil.year(new Date()) - Integer.parseInt(user.getAccount().substring(6, 10)))
+                .state(state)
                 .build();
 
     }

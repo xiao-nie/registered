@@ -41,4 +41,6 @@ public interface RegistrationMapper extends SuperMapper<Registration> {
      */
     List<Registration> getToday(@Param("doctorId") Long doctorId, @Param("begin") Date begin, @Param("after") Date after);
 
+
+
 }

@@ -51,4 +51,11 @@ public interface RegistrationService extends SuperCacheService<Registration>, Lo
      */
     R delReg(Long id);
 
+    /**
+     * 医生获取当前需要就真的病患者信息
+     *
+     * @return
+     */
+    R getMin();
+
 }

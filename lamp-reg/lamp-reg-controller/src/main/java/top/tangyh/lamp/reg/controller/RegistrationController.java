@@ -64,5 +64,10 @@ public class RegistrationController extends SuperCacheController<RegistrationSer
         return registrationService.delReg(id);
     }
 
+    @GetMapping("/registered/doctor/getMin")
+    public R getMin() {
+        return registrationService.getMin();
+    }
+
 
 }
