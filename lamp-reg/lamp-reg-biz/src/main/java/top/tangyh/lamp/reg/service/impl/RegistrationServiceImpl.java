@@ -143,7 +143,7 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
                 .eq(Registration::getDoctorId, min.getDoctorId())
                 .ne(Registration::getId, min.getId()));
         ArrayList<HistoryDTO> historyDTOS = new ArrayList<>();
-        registrations.forEach(r -> historyDTOS.add(HistoryDTO.builder().id(r.getId()).date(LocalDateTimeUtil.format(r.getCreateTime(), DatePattern.NORM_DATETIME_PATTERN)).build()));
+        registrations.forEach(r -> historyDTOS.add(HistoryDTO.builder().id(r.getId()).date(LocalDateTimeUtil.format(r.getCreateTime(), DatePattern.CHINESE_DATE_PATTERN)).info(r.getCaseHistory()).build()));
         return R.success(MinDTO.builder().registration(min).regUserInfo(regUserInfo).hisList(historyDTOS).build());
     }
 
