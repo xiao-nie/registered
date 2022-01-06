@@ -58,4 +58,12 @@ public interface RegistrationService extends SuperCacheService<Registration>, Lo
      */
     R getMin();
 
+    /**
+     * 当前挂号订单状态更新
+     *
+     * @param id
+     * @return
+     */
+    R addState(Long id);
+
 }

@@ -147,6 +147,20 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
         return R.success(MinDTO.builder().registration(min).regUserInfo(regUserInfo).hisList(historyDTOS).build());
     }
 
+    @Override
+    public R addState(Long id) {
+        Registration registration = baseMapper.selectById(id);
+        if (registration == null) {
+            return R.fail("挂号订单不存在");
+        }
+        if (registration.getState() >= 2) {
+            return R.fail("当前挂号订单就诊已结束");
+        }
+        registration.setState(registration.getState() + 1);
+
+        return R.success(baseMapper.updateById(registration) > 0);
+    }
+
     public RegCredentialsDTO entityToRegCredentialsDTO(Registration entity) {
         if (entity == null) {
             return RegCredentialsDTO.builder().build();

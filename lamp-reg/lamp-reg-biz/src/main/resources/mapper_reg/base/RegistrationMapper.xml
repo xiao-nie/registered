@@ -15,5 +15,8 @@
         from c_registration
         where create_time between #{begin} and #{after}
           and doctor_id = #{doctorId}
+          and state
+            &lt;
+              2
     </select>
 </mapper>

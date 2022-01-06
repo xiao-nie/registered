@@ -64,9 +64,25 @@ public class RegistrationController extends SuperCacheController<RegistrationSer
         return registrationService.delReg(id);
     }
 
+    /**
+     * 医生获取当前第一位需要就诊的患者
+     *
+     * @return
+     */
     @GetMapping("/registered/doctor/getMin")
     public R getMin() {
         return registrationService.getMin();
+    }
+
+    /**
+     * 就诊状态更新
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/registered/doctor/addState/{id}")
+    public R addState(@PathVariable("id") Long id) {
+        return registrationService.addState(id);
     }
 
 
