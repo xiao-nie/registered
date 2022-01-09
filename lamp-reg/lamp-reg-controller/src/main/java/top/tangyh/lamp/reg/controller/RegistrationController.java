@@ -10,6 +10,7 @@ import top.tangyh.basic.context.ContextUtil;
 import top.tangyh.lamp.authority.dto.core.OrgPageQuery;
 import top.tangyh.lamp.authority.dto.core.OrgSaveDTO;
 import top.tangyh.lamp.authority.dto.core.OrgUpdateDTO;
+import top.tangyh.lamp.reg.dto.HistoryDTO;
 import top.tangyh.lamp.reg.dto.RegCredentialsDTO;
 import top.tangyh.lamp.reg.entity.Registration;
 import top.tangyh.lamp.reg.service.RegistrationService;
@@ -83,6 +84,11 @@ public class RegistrationController extends SuperCacheController<RegistrationSer
     @PostMapping("/registered/doctor/addState/{id}")
     public R addState(@PathVariable("id") Long id) {
         return registrationService.addState(id);
+    }
+
+    @PostMapping("/registered/doctor/updateHis")
+    public R updateHis(@RequestBody HistoryDTO historyDTO){
+        return registrationService.updateHis(historyDTO);
     }
 
 

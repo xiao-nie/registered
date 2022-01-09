@@ -132,9 +132,9 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
             return R.fail("您今天暂无患者就诊！");
         }
         //过滤出待就诊和就诊中的挂号记录
-        List<Registration> state = today.stream().filter(registration -> registration.getState() < 2).collect(Collectors.toList());
+//        List<Registration> state = today.stream().filter(registration -> registration.getState() < 3).collect(Collectors.toList());
         //获取需要叫号的患者信息，根据排号顺序
-        Registration min = state.stream().min(Comparator.comparing(Registration::getNumber)).get();
+        Registration min = today.stream().min(Comparator.comparing(Registration::getNumber)).get();
         User user = userMapper.selectById(min.getUserId());
         RegUserInfo regUserInfo = userTORegUserDTO(user, min);
 
@@ -153,12 +153,23 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
         if (registration == null) {
             return R.fail("挂号订单不存在");
         }
-        if (registration.getState() >= 2) {
+        if (registration.getState() >= 3) {
             return R.fail("当前挂号订单就诊已结束");
         }
         registration.setState(registration.getState() + 1);
 
         return R.success(baseMapper.updateById(registration) > 0);
+    }
+
+    @Override
+    public R updateHis(HistoryDTO historyDTO) {
+        Registration registration = baseMapper.selectById(historyDTO.getId());
+        if (registration == null) {
+            return R.fail("当前挂号订单不存在");
+        }
+        registration.setCaseHistory(historyDTO.getInfo());
+        int i = baseMapper.updateById(registration);
+        return i > 0 ? R.success("病历信息修改成功") : R.fail("保存失败");
     }
 
     public RegCredentialsDTO entityToRegCredentialsDTO(Registration entity) {
@@ -198,12 +209,15 @@ public class RegistrationServiceImpl extends SuperCacheServiceImpl<RegistrationM
         String state = "";
         switch (registration.getState()) {
             case 0:
-                state = "待就诊";
+                state = "待叫号";
                 break;
             case 1:
-                state = "就诊中";
+                state = "待就诊";
                 break;
             case 2:
+                state = "就诊中";
+                break;
+            case 3:
                 state = "已就诊";
                 break;
         }

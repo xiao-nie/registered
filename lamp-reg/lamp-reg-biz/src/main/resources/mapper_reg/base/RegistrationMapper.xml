@@ -17,6 +17,6 @@
           and doctor_id = #{doctorId}
           and state
             &lt;
-              2
+              3
     </select>
 </mapper>
